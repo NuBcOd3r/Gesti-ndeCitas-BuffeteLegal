@@ -27,7 +27,7 @@
                 </a>
             </li>
             <li>
-                <a href="../Administrativo/Dashboard.php" class="nav-link text-white">
+                <a href="#" class="nav-link text-white">
                     <i class="fa-solid fa-gauge me-2"></i>
                     Dashboard
                 </a>
