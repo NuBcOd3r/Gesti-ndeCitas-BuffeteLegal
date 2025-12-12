@@ -18,6 +18,36 @@ USE `dblegal`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `tbcliente`
+--
+
+DROP TABLE IF EXISTS `tbcliente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbcliente` (
+  `idCliente` int NOT NULL AUTO_INCREMENT,
+  `idNacionalidad` int NOT NULL,
+  `cedula` varchar(255) NOT NULL,
+  `nombreCompleto` varchar(255) NOT NULL,
+  `correoElectronico` varchar(255) DEFAULT NULL,
+  `telefono` int NOT NULL,
+  `estado` bit(1) NOT NULL DEFAULT b'1',
+  PRIMARY KEY (`idCliente`),
+  KEY `FK_CLIENTE_NACIONALIDAD` (`idNacionalidad`),
+  CONSTRAINT `FK_CLIENTE_NACIONALIDAD` FOREIGN KEY (`idNacionalidad`) REFERENCES `tbnacionalidad` (`idNacionalidad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbcliente`
+--
+
+LOCK TABLES `tbcliente` WRITE;
+/*!40000 ALTER TABLE `tbcliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbcliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tberror`
 --
 
@@ -40,6 +70,30 @@ LOCK TABLES `tberror` WRITE;
 /*!40000 ALTER TABLE `tberror` DISABLE KEYS */;
 INSERT INTO `tberror` VALUES (1,'Field \'estado\' doesn\'t have a default value','2025-12-10 15:06:21'),(2,'Unknown column \'Identificacion\' in \'where clause\'','2025-12-10 15:16:53'),(3,'Ya existe un usuario con esa identificación o correo electrónico.','2025-12-10 15:17:39'),(4,'Ya existe un usuario con esa identificación o correo electrónico.','2025-12-10 15:24:34'),(5,'Ya existe un usuario con esa identificación o correo electrónico.','2025-12-10 15:25:03'),(6,'Ya existe un usuario con esa identificación o correo electrónico.','2025-12-10 15:26:27'),(7,'Ya existe un usuario con esa identificación o correo electrónico.','2025-12-10 15:46:12');
 /*!40000 ALTER TABLE `tberror` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbnacionalidad`
+--
+
+DROP TABLE IF EXISTS `tbnacionalidad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbnacionalidad` (
+  `idNacionalidad` int NOT NULL AUTO_INCREMENT,
+  `nombreNacionalidad` varchar(45) NOT NULL,
+  PRIMARY KEY (`idNacionalidad`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbnacionalidad`
+--
+
+LOCK TABLES `tbnacionalidad` WRITE;
+/*!40000 ALTER TABLE `tbnacionalidad` DISABLE KEYS */;
+INSERT INTO `tbnacionalidad` VALUES (1,'Nacional'),(2,'Extranjero');
+/*!40000 ALTER TABLE `tbnacionalidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -75,6 +129,28 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'dblegal'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `ConsultarNacionalidad` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarNacionalidad`()
+BEGIN
+	SELECT
+		idNacionalidad,
+        nombreNacionalidad
+    from tbnacionalidad;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `IniciarSesion` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -179,4 +255,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-10 16:43:32
+-- Dump completed on 2025-12-12 16:49:05
